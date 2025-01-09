@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>POC Challenger</title>
+    <link rel="shortcut icon" href="/star.png">
+</head>
+
+<body>
+    <script>
+        // Override console.log
+        console.log = (function (originalLog) {
+          return function (...args) {
+            // Call the original console.log to keep logging in the console
+            originalLog.apply(console, args);
+
+            // Create a div element to display the log on the page
+            const logDiv = document.createElement('div');
+            logDiv.textContent = args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg) : arg)).join(' ');
+
+            // Style the log message (optional)
+            logDiv.style.cssText = 'font-family: monospace; background: #f4f4f4; padding: 5px; margin: 2px 0; border: 1px solid #ddd;';
+
+            // Append the log message to the body or a specific container
+            document.body.appendChild(logDiv);
+          };
+        })(console.log);
+    </script>
+    <main></main>
+    <r10-challenger pid="4e875a0d-19c3-4dbd-98fb-944b5c185e5e" env="ci" debug-log></r10-challenger>
+    <script>
+        // Wait for the DOM to load
+        document.addEventListener('DOMContentLoaded', () => {
+          // Select the web component
+          const challengerElement = document.querySelector('r10-challenger');
+          challengerElement.addEventListener('r10-challenger-attribute-error', (event) => {console.log('attribute-error', event.detail);});
+          challengerElement.addEventListener('r10-challenger-load-started', (event) => {console.log('load-started', event.detail);});
+          challengerElement.addEventListener('r10-challenger-load-finished', (event) => {console.log('load-finished', event.detail);});
+          challengerElement.addEventListener('r10-challenger-load-error', (event) => {console.log('load-error', event.detail);});
+          challengerElement.addEventListener('r10-challenger-pow-started', (event) => {console.log('pow-started', event.detail);});
+          challengerElement.addEventListener('r10-challenger-pow-finished', (event) => {console.log('pow-finished', event.detail);});
+          challengerElement.addEventListener('r10-challenger-return-data', (event) => {console.log('return-data', event.detail);});
+          challengerElement.addEventListener('r10-challenger-request-cdata', (event) => {console.log('request-cdata', event.detail);});
+          challengerElement.addEventListener('r10-challenger-imnotabot-checkbox-changed', (event) => {console.log('imnotabot-checkbox-changed', event.detail);});
+          challengerElement.addEventListener('r10-challenger-mounted', (event) => {console.log('mounted', event.detail);});
+          challengerElement.addEventListener('r10-challenger-unmounted', (event) => {console.log('unmounted', event.detail);});
+        });
+    </script>
+    <script src="r10-challenger-0.2.0-9457568.js"></script>
+    <!-- <script src="r10-challenger-0.1.0-7063009.js"></script> -->
+    <!-- <script src="elm.js"></script>
+    <script>
+        var app = Elm.Main.init(
+            { node: document.querySelector('main') }
+        )
+    </script> -->
+
+    
+</body>
+</html>
